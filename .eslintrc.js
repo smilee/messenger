@@ -40,10 +40,7 @@ module.exports = {
     'key-spacing': ['error', { mode: 'strict' }],
     'arrow-spacing': ['error', { before: true, after: true }],
     'react/prop-types': 'off',
-    'linebreak-style': 'off',
-    'import/no-extraneous-dependencies': [
-      'error',
-      { devDependencies: ['codecept.conf.js'] },
-    ],
+    'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
+    'no-unused-vars': ['error', { varsIgnorePattern: 'jsx' }],
   },
 };
