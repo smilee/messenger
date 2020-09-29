@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
@@ -15,5 +15,19 @@ describe('Root', () => {
     const { container } = render(<App />);
 
     expect(container.innerHTML).toContain('<main');
+  });
+
+  describe('when user inputs a new message', () => {
+    it('appends message', () => {
+      const { getByLabelText, getByText, container } = render(<App />);
+
+      fireEvent.change(getByLabelText('InputText'), {
+        target: { value: 'Hi!' },
+      });
+
+      fireEvent.click(getByText('Send'));
+
+      expect(container.innerHTML).toContain('Hi!');
+    });
   });
 });

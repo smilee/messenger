@@ -9,7 +9,9 @@ import SidebarBody from './SidebarBody';
 import MainHeader from './MainHeader';
 import MainBody from './MainBody';
 
-export default function ChatPage() {
+export default function ChatPage({
+  messages, draft, onChangeDraft, onSend,
+}) {
   return (
     <Root>
       <Sidebar>
@@ -18,7 +20,12 @@ export default function ChatPage() {
       </Sidebar>
       <Main>
         <MainHeader />
-        <MainBody />
+        <MainBody
+          messages={messages}
+          draft={draft}
+          onChangeDraft={onChangeDraft}
+          onSend={onSend}
+        />
       </Main>
     </Root>
   );
