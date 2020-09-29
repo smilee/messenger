@@ -21,7 +21,7 @@ describe('Root', () => {
     it('appends message', () => {
       const { getByLabelText, getByText, container } = render(<App />);
 
-      fireEvent.change(getByLabelText('InputText'), {
+      fireEvent.change(getByLabelText('Draft'), {
         target: { value: 'Hi!' },
       });
 
