@@ -11,6 +11,11 @@ npm install
 npm start
 ```
 
+## Compile and minify for production
+```
+npm run build
+```
+
 ## Lint and fix files
 ```
 npm lint
