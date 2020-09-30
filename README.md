@@ -1,17 +1,19 @@
 # Messenger
 
-## Setup project
+![Screenshot](screenshot.png)
+
+## Install dependencies
 
 ```
 npm install
 ```
 
-## Compile and hot-reload for development
+## Run web server for development
 ```
 npm start
 ```
 
-## Compile and minify for production
+## Build static files for production
 ```
 npm run build
 ```
