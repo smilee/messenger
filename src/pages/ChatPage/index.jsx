@@ -6,27 +6,25 @@ import Main from '../../layout/Main';
 
 import SidebarHeader from './SidebarHeader';
 import SidebarBody from './SidebarBody';
-import MainHeader from './MainHeader';
-import MainBody from './MainBody';
 
 export default function ChatPage({
-  messages, draft, onChangeDraft, onSend,
+  channels, onAddChannel, onChangeChannel,
+  channel, onChangeDraft, onSendMessage,
 }) {
   return (
     <Root>
       <Sidebar>
-        <SidebarHeader />
-        <SidebarBody />
-      </Sidebar>
-      <Main>
-        <MainHeader />
-        <MainBody
-          messages={messages}
-          draft={draft}
-          onChangeDraft={onChangeDraft}
-          onSend={onSend}
+        <SidebarHeader onAddChannel={onAddChannel} />
+        <SidebarBody
+          channels={channels}
+          onChangeChannel={onChangeChannel}
         />
-      </Main>
+      </Sidebar>
+      <Main
+        channel={channel}
+        onChangeDraft={onChangeDraft}
+        onSendMessage={onSendMessage}
+      />
     </Root>
   );
 }

@@ -2,110 +2,60 @@ import React, { useEffect, useReducer } from 'react';
 
 import ChatPage from './pages/ChatPage';
 
-const MESSAGES = [
-  'Hello!',
-  'How are you?',
-];
+import reducer, { initialState } from './reducer';
 
-const initialState = {
-  newId: 1,
-  draft: {
-    message: '',
-  },
-  messages: [],
-};
-
-function DEFAULT_REDUCER(state) {
-  return state;
-}
-
-const reducers = {
-  changeDraftMessage(state, { payload: { value } }) {
-    return {
-      ...state,
-      draft: {
-        ...state.draft,
-        message: value,
-      },
-    };
-  },
-  addMessage(state, { payload: { senderId, content } }) {
-    return {
-      ...state,
-      newId: state.newId + 1,
-      messages: [
-        ...state.messages,
-        { id: state.newId, senderId, content },
-      ],
-    };
-  },
-  sendMessage(state, { payload: { senderId } }) {
-    return {
-      ...state,
-      newId: state.newId + 1,
-      draft: {
-        ...state.draft,
-        message: '',
-      },
-      messages: [
-        ...state.messages,
-        { id: state.newId, senderId, content: state.draft.message },
-      ],
-    };
-  },
-};
-
-function reducer(state, action) {
-  return (reducers[action.type] || DEFAULT_REDUCER)(state, action);
-}
-
-const {
+import {
+  addRandomChannel,
+  changeChannel,
   changeDraftMessage,
-  addMessage,
+  addRandomMessage,
   sendMessage,
-} = Object.keys(reducers).reduce((acc, key) => ({
-  ...acc,
-  [key]: (payload) => ({ type: key, payload }),
-}), {});
+} from './actions';
 
-function initMessageGenerator({ dispatch }) {
-  let index = 0;
-
+function initMessageGenerator({ channelId, dispatch }) {
   return setInterval(() => {
-    if (index >= MESSAGES.length) {
-      return;
-    }
-
-    dispatch(addMessage({ senderId: 0, content: MESSAGES[index] }));
-
-    index += 1;
-  }, 1000);
+    dispatch(addRandomMessage({ channelId }));
+  }, Math.random() * (5000 - 2000) + 2000);
 }
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const { draft, messages } = state;
+  const { channels } = state;
+  const channel = channels[state.channelId];
 
-  function handleChangeDraft(value) {
-    dispatch(changeDraftMessage({ value }));
+  function handleAddChannel() {
+    dispatch(addRandomChannel());
   }
 
-  function handleSendMessage() {
-    dispatch(sendMessage({ senderId: 1 }));
+  function handleChangeChannel({ channelId }) {
+    dispatch(changeChannel({ channelId }));
+  }
+
+  function handleChangeDraft({ channelId, value }) {
+    dispatch(changeDraftMessage({ channelId, value }));
+  }
+
+  function handleSendMessage({ channelId }) {
+    dispatch(sendMessage({ channelId, senderId: 0 }));
   }
 
   useEffect(() => {
-    const id = initMessageGenerator({ dispatch });
+    if (!channel) {
+      return undefined;
+    }
+    const id = initMessageGenerator({ channelId: channel.id, dispatch });
     return () => clearTimeout(id);
-  }, []);
+  }, [state.channelId]);
 
   return (
     <ChatPage
-      messages={messages}
-      draft={draft}
+      channels={channels}
+      onAddChannel={handleAddChannel}
+      onChangeChannel={handleChangeChannel}
+      channel={channel}
       onChangeDraft={handleChangeDraft}
-      onSend={handleSendMessage}
+      onSendMessage={handleSendMessage}
     />
   );
 }

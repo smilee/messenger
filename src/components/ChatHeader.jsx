@@ -6,11 +6,11 @@ const Container = styled.header({
   padding: '8px 8px 8px 16px',
 });
 
-export default function MainHeader() {
+export default function ChatHeader({ channel }) {
   return (
     <Container>
-      <img src="https://via.placeholder.com/40.png" alt="profile" />
-      <p>Name</p>
+      <img src={channel.avatar} alt="profile" />
+      <p>{channel.name}</p>
     </Container>
   );
 }
