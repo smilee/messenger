@@ -5,6 +5,10 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('Root', () => {
+  beforeEach(() => {
+    Element.prototype.scrollTo = jest.fn();
+  });
+
   it('renders sidebar', () => {
     const { container } = render(<App />);
 
@@ -13,9 +17,9 @@ describe('Root', () => {
 
   describe('when a new channel is created', () => {
     it('renders main', () => {
-      const { container, getByText } = render(<App />);
+      const { container, getByTitle } = render(<App />);
 
-      fireEvent.click(getByText('New chat'));
+      fireEvent.click(getByTitle('New chat'));
 
       expect(container.innerHTML).toContain('<main');
     });
@@ -23,15 +27,17 @@ describe('Root', () => {
 
   describe('when user inputs a new message', () => {
     it('appends message', () => {
-      const { getByLabelText, getByText, container } = render(<App />);
+      const {
+        getByLabelText, getByTitle, container,
+      } = render(<App />);
 
-      fireEvent.click(getByText('New chat'));
+      fireEvent.click(getByTitle('New chat'));
 
       fireEvent.change(getByLabelText('Draft'), {
         target: { value: 'Hi!' },
       });
 
-      fireEvent.click(getByText('Send'));
+      fireEvent.click(getByTitle('Send'));
 
       expect(container.innerHTML).toContain('Hi!</li>');
     });

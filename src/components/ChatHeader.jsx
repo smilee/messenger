@@ -1,16 +1,19 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import Avatar from './Avatar';
+
 const Container = styled.header({
-  display: 'flex',
   padding: '8px 8px 8px 16px',
+  borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+  background: '#fff',
 });
 
 export default function ChatHeader({ channel }) {
   return (
     <Container>
-      <img src={channel.avatar} alt="profile" />
-      <p>{channel.name}</p>
+      <Avatar src={channel.avatar} alt="profile" />
+      {channel.name}
     </Container>
   );
 }

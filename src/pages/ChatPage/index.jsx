@@ -16,6 +16,7 @@ export default function ChatPage({
       <Sidebar>
         <SidebarHeader onAddChannel={onAddChannel} />
         <SidebarBody
+          channelId={channel ? channel.id : null}
           channels={channels}
           onChangeChannel={onChangeChannel}
         />
