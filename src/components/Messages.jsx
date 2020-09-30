@@ -21,19 +21,21 @@ const Item = styled.li(({ me }) => ({
   padding: '10px 12px',
   fontSize: '14px',
   background: me ? colors.yellow : '#fff',
-  border: '1px solid rgba(0, 0, 0, 0.06)',
   borderRadius: me ? '12px 0 12px 12px' : '0 12px 12px 12px',
 }));
 
 function scrollDown(container, list) {
-  if (container.scrollTop + 120 < list.clientHeight - container.clientHeight) {
+  container.scrollTo(0, list.scrollHeight);
+}
+function scrollDownConditional(container, list) {
+  if (container.scrollTop + 120 < list.scrollHeight - container.clientHeight) {
     return;
   }
 
-  container.scrollTo(0, list.clientHeight);
+  scrollDown(container, list);
 }
 
-export default function Messages({ messages }) {
+export default function Messages({ channelId, messages }) {
   const refContainer = useRef(null);
   const refList = useRef(null);
 
@@ -43,6 +45,14 @@ export default function Messages({ messages }) {
     }
 
     scrollDown(refContainer.current, refList.current);
+  }, [channelId]);
+
+  useEffect(() => {
+    if (!refContainer.current || !refList.current) {
+      return;
+    }
+
+    scrollDownConditional(refContainer.current, refList.current);
   }, [messages]);
 
   if (!messages || !messages.length) {

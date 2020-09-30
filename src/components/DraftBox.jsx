@@ -32,7 +32,7 @@ const Button = styled.button({
   right: '12px',
   width: '28px',
   height: '28px',
-  border: '1px solid rgba(0, 0, 0, 0.04)',
+  border: 0,
   borderRadius: '50%',
   background: colors.yellow,
   overflow: 'hidden',

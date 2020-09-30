@@ -19,7 +19,7 @@ const Heading = styled.h2({
 const Button = styled.button({
   width: '36px',
   height: '36px',
-  border: '1px solid rgba(0, 0, 0, 0.06)',
+  border: 0,
   borderRadius: '50%',
   background: 'rgba(0, 0, 0, 0.04)',
   '& svg': {

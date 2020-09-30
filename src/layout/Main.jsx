@@ -23,7 +23,10 @@ export default function Main({ channel, onChangeDraft, onSendMessage }) {
   return (
     <Container>
       <ChatHeader channel={channel} />
-      <Messages messages={channel.messages} />
+      <Messages
+        channelId={channel.id}
+        messages={channel.messages}
+      />
       <DraftBox
         channelId={channel.id}
         draft={channel.draft}
