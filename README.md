@@ -1,6 +1,8 @@
 # Messenger
 
-![Screenshot](screenshot.png)
+Demo: <https://uxplus.dev/messenger/>
+
+<img src="screenshot.png" width="480" alt="screenshot" />
 
 ## Install dependencies
 
